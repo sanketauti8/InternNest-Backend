@@ -27,9 +27,14 @@ router.get('/', async (req, res) => {
           createdAt: post.createdAt,
           updatedAt: post.updatedAt,
           // Add user details to the post data
+          user_id:user._id,
           userEmail: user.email,
           userFirstName: user.firstName,
           userLastName: user.lastName,
+          country: user.country,
+          state: user.state,
+          city: user.city,
+          zip: user.zip,
         };
         combinedData.push(postData);
       }
@@ -43,6 +48,9 @@ router.get('/', async (req, res) => {
     return res.status(500).json({ error: "Something went wrong." });
   }
 });
+
+
+
 
 module.exports = router;
 
