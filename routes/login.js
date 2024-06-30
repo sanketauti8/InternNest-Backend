@@ -5,8 +5,8 @@ router.post("/", async (req, res) => {
   const { email, password } = req.body;
   
   try {
-    const resdata = await chatAppLogin(email, password);
-    console.log("res", resdata);
+   const resdata = await chatAppLogin(email, password);
+   console.log("res", resdata);
     
     const data = await User.findOne({ email });
     
@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
     }
 
     if (password === data.password) {
-      // Combine chat app response data with user data
+       //Combine chat app response data with user data
       const combinedData = {
         ...resdata,
         userId: data._id,
@@ -24,6 +24,7 @@ router.post("/", async (req, res) => {
         userLastName: data.lastName,
       };
       res.json({ msg: combinedData });
+      console.log("login",combinedData);
     } else {
       res.json({ msg: "Login Failed! Wrong password.." });
     }
@@ -48,6 +49,7 @@ async function chatAppLogin(email, password) {
     });
 
     const responseData = await response.json();
+    console.log("responseData", responseData);
 
     if (!response.ok) {
       console.error('Error in chat app response:', responseData);
@@ -62,3 +64,5 @@ async function chatAppLogin(email, password) {
 }
 
 module.exports = router;
+
+

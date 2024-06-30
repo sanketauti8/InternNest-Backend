@@ -54,36 +54,3 @@ router.get('/', async (req, res) => {
 
 module.exports = router;
 
-// const Post = require('../models/post');
-// const User = require('../models/user');
-// const router=require('express').Router();
-
-// router.get('/',async(req,res)=>{
-//     try {
-//         console.log("inside getallpost");
-//         const data =await Post.find({});
-//         const user =await User.find({});
-//        // const data = await collection.find({});
-//         //console.log(data);
-//       res.json(data);
-
-//         // const combinedData = {
-//         //     ...data,
-//         //     userId: user._id, // Example of additional data
-//         //     userEmail: user.email,
-//         //     userFirstName: user.firstName,
-//         //     userLastName: user.lastName,
-//         //     // Add any other additional data you need
-//         //   };
-//         //   res.json({ msg: combinedData });
-          
-//     } catch (error) {
-//         return res.json({error:"Something went wrong."}); 
-//     }
- 
-    
-// });
-
-
-
-// module.exports=router;

@@ -34,6 +34,7 @@ const upload = multer({ storage: storage, fileFilter: fileFilter });
 // POST route to create a new post
 router.post('/:id', upload.single('profileImage'), async (req, res) => {
   try {
+    console.log("Inside create post");
     const { description, postzip, postcity, poststate, postcountry } = req.body;
     const userId = req.params.id;
 
@@ -58,6 +59,7 @@ router.post('/:id', upload.single('profileImage'), async (req, res) => {
     });
 
     res.status(201).json(post);
+    console.log(post);
   } catch (error) {
     console.error('Error creating post:', error);
     res.status(500).json({ error: 'Something went wrong.' });

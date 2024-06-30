@@ -1,4 +1,3 @@
-
 const express = require('express');
 const Post = require('../models/post');
 const User = require('../models/user');
@@ -6,7 +5,7 @@ const router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    const { postzip, postcity, poststate, postcountry } = req.query;
+    const { postzip } = req.query;
 
     // Create a search condition
     let searchCondition = {};
@@ -14,16 +13,9 @@ router.get('/', async (req, res) => {
     if (postzip) {
       searchCondition['postzip'] = { $regex: postzip, $options: 'i' };
     }
-    if (postcity) {
-      searchCondition['postcity'] = { $regex: postcity, $options: 'i' };
-    }
-    if (poststate) {
-      searchCondition['poststate'] = { $regex: poststate, $options: 'i' };
-    }
-    if (postcountry) {
-      searchCondition['postcountry'] = { $regex: postcountry, $options: 'i' };
-    }
-    console.log("postzip",postzip);
+
+    console.log("searchCondition", searchCondition);
+
     // Fetch posts matching the search condition
     const posts = await Post.find(searchCondition).populate('createdBy', 'email firstName lastName country state city zip');
 
@@ -32,12 +24,12 @@ router.get('/', async (req, res) => {
       _id: post._id,
       profileImage: post.profileImage,
       description: post.description,
-      createdBy: post.createdBy._id,
+      createdBy: post.createdBy ? post.createdBy._id : null,
       createdAt: post.createdAt,
       updatedAt: post.updatedAt,
-      userEmail: post.createdBy.email,
-      userFirstName: post.createdBy.firstName,
-      userLastName: post.createdBy.lastName,
+      userEmail: post.createdBy ? post.createdBy.email : null,
+      userFirstName: post.createdBy ? post.createdBy.firstName : null,
+      userLastName: post.createdBy ? post.createdBy.lastName : null,
       country: post.postcountry,
       state: post.poststate,
       city: post.postcity,

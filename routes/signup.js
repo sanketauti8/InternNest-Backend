@@ -7,6 +7,11 @@ router.post('/',async(req,res)=>{
     try {
        // console.log(req.body);
         const {firstName,lastName,email,password,contact,address,country,state,city,zip}=req.body;
+          // Check if email already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: "Duplicate email: this email is already registered." });
+    }
         chatApp(firstName,email,password);
         const user= await User.create({firstName,lastName,email,password,contact,address,country,state,city,zip});
         //res.status(201).json({msg:"User created successfully!"});
@@ -33,11 +38,11 @@ async function chatApp(name,email,password){
             })
         });
         //console.log(response);
-        if (!response.ok) {
-            const errorData = await response.json();
-            console.error('Error in chat app response:', errorData);
-            //throw new Error(`Error: ${response.statusText}`);
-        }
+        // if (!response.ok) {
+        //     const errorData = await response.json();
+        //     console.error('Error in chat app response:', errorData);
+        //     //throw new Error(`Error: ${response.statusText}`);
+        // }
        // const responseData = await response.json();
         //console.log('Response from chat app:', responseData);
     } catch (error) {
